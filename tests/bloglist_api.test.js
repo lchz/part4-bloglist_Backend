@@ -33,7 +33,12 @@ test('a specific blog is within the returned blogs', async () => {
     expect(titles).toContain('An interesting day')
 })
 
-
+test('a blog is containing id filed', async () => {
+    const res = await api.get('/api/blogs')
+    for (let blog of res.body) {
+        expect(blog.id).toBeDefined()
+    }
+})
 
 afterAll(() => {
     mongoose.connection.close()
