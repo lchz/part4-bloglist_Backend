@@ -4,9 +4,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
-// const blogRouter
+const blogRouter = require('./controllers/blogs')
 // const middleware
-// const logger
 
 logger.info('Connecting to', config.mongoUrl)
 
@@ -20,5 +19,7 @@ mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: t
 
 app.use(cors())
 app.use(express.json())
+
+app.use('/api/blogs', blogRouter)
 
 module.exports = app
