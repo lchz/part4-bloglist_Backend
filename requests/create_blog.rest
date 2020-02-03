@@ -7,9 +7,17 @@ Content-Type: application/json
 #     "url": "http://blog/chrisblog/hello",
 #     "likes": 0
 # }
+
+# {
+#     "title": "An interesting day",
+#     "author": "Mitchel",
+#     "url": "http://blog/mitchelblog/interest",
+#     "likes": 0
+# }
+
 {
-    "title": "An interesting day",
-    "author": "Mitchel",
-    "url": "http://blog/mitchelblog/interest",
-    "likes": 0
+    "title": "2020 could be easier",
+    "author": "Christina",
+    "url": "http://blog/christina/2020",
+    "likes": 11
 }

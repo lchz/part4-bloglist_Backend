@@ -40,6 +40,58 @@ test('a blog is containing id filed', async () => {
     }
 })
 
+/** Test POST */
+test('a valid blog can be added', async () => {
+    const newBlog = {
+        title: 'Testing POST method',
+        author: 'queue',
+        url: 'http://testtest/post',
+        likes: 0
+    }
+
+    await api.post('/api/blogs')
+             .send(newBlog)
+             .expect(201)
+             .expect('Content-Type', /application\/json/)
+
+    const allBlogs = await Blog.find({})
+    const titles = allBlogs.map(b => b.title)
+
+    expect(allBlogs.length).toBe(helper.initialBlogs.length + 1)       
+    expect(titles).toContain('Testing POST method')
+})
+
+test('likes default value is 0 when it is missing', async () => {
+    const newBlog = {
+        title: 'Jest is wonderful',
+        author: 'queue',
+        url: 'http://testtest/post'
+    }
+
+    await api.post('/api/blogs')
+             .send(newBlog)
+             .expect(201)
+             .expect('Content-Type', /application\/json/)
+
+    const allBlogs = await Blog.find({})
+    const addedBlog = allBlogs[allBlogs.length-1]
+
+    expect(addedBlog.likes).toBe(0)
+})
+
+test('could not create a blog without title and url', async () => {
+    const newBlog = {
+        author: 'queue',
+        likes: 0
+    }
+
+    await api.post('/api/blogs')
+             .send(newBlog)
+             .expect(400)
+
+})
+
+
 afterAll(() => {
     mongoose.connection.close()
 })
