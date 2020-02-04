@@ -13,3 +13,30 @@ Content-Type: application/json
     "url": "http://blog/christina/2020",
     "likes": 9
 }
+
+### USER:
+GET http://localhost:3003/api/users
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+# {
+#     "username": "root",
+#     "name": "Root Node",
+#     "password": "root"
+# }
+# {
+#     "username": "Chris",
+#     "name": "Chris Savotor",
+#     "password": "chris"
+# }
+# {
+#     "username": "louis",
+#     "name": "Louis Manhatten",
+#     "password": "louis"
+# }
+{
+    "username": "Not valid",
+    "password": "ppppppppp"
+}
