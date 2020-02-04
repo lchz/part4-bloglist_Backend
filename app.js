@@ -11,7 +11,7 @@ require('express-async-error')
 
 logger.info('Connecting to', config.mongoUrl)
 
-mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(() => {
     logger.info('Connected to MongoDB')
   })

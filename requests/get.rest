@@ -1,1 +1,15 @@
 GET http://localhost:3003/api/blogs
+
+###
+DELETE http://localhost:3003/api/blogs/5e3897cf0e0db32ed801ebd0
+
+###
+PUT http://localhost:3003/api/blogs/5e395226721dca1f019461f8
+Content-Type: application/json
+
+{
+    "title": "2020 could be easier",
+    "author": "Christina",
+    "url": "http://blog/christina/2020",
+    "likes": 9
+}
