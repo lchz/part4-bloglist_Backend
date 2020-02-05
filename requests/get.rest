@@ -1,7 +1,33 @@
 GET http://localhost:3003/api/blogs
 
 ###
-DELETE http://localhost:3003/api/blogs/5e3897cf0e0db32ed801ebd0
+DELETE http://localhost:3003/api/blogs/5e39d8f6847d2d171715a638
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+# {
+#     "title": "Hello my blog",
+#     "author": "Chris",
+#     "url": "http://blog/chrisblog/hello",
+#     "likes": 0
+# }
+
+# {
+#     "title": "An interesting day",
+#     "author": "Mitchel",
+#     "url": "http://blog/mitchelblog/interest",
+#     "likes": 0
+# }
+
+{
+    "title": "What a messup",
+    "author": "Wu Mint",
+    "url": "http://blog/wumint/whatamessup",
+    "likes": 11,
+    "userId": "5e39b348f2e7676ca9c034fe"
+}
 
 ###
 PUT http://localhost:3003/api/blogs/5e395226721dca1f019461f8
@@ -14,6 +40,7 @@ Content-Type: application/json
     "likes": 9
 }
 
+######################################
 ### USER:
 GET http://localhost:3003/api/users
 
@@ -36,7 +63,29 @@ Content-Type: application/json
 #     "name": "Louis Manhatten",
 #     "password": "louis"
 # }
+
+#####################################
+### Login
+
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
 {
-    "username": "Not valid",
-    "password": "ppppppppp"
+    "username": "louis",
+    "password": "louis"
+}
+### token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvdWlzIiwiaWQiOiI1ZTM5Yjk1YWQ0OGE2Nzc5MjgyNjRiOTYiLCJpYXQiOjE1ODA4OTU2MjR9.jrY5nsFhdR3AdTVYFeqwiJ1dRgcjoP6acI4yKJod8JI
+
+########################################
+### Only logged in to POST
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvdWlzIiwiaWQiOiI1ZTM5Yjk1YWQ0OGE2Nzc5MjgyNjRiOTYiLCJpYXQiOjE1ODA4OTU2MjR9.jrY5nsFhdR3AdTVYFeqwiJ1dRgcjoP6acI4yKJod8JI
+
+{
+    "title": "Getting familiar with token",
+    "author": "Kaeron McFeat",
+    "url": "http://blog/kaeron/token",
+    "likes": 7
 }

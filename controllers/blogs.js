@@ -1,35 +1,64 @@
 
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
+const User = require('../models/user')
+
+const jwt = require('jsonwebtoken')
+
+
 
 blogRouter.get('/', async (request, response) => {
 
-    const blogs = await Blog.find({})
+    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1})
     response.json(blogs.map(b => b.toJSON()))
 
 })
 
-blogRouter.post('/', async (request, response) => {
+blogRouter.post('/', async (req, res) => {
+    
+    const body = req.body
+    const token = getTokenFrom(req)
 
-    const blog = new Blog(request.body)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!token || !decodedToken.id) {
+        return res.status(401).json({ error: 'token missing or invalid'})
+    }
 
-    if (!blog.title && !blog.url) {
+    const user = await User.findById(decodedToken.id)
 
-        response.status(400).end()
+    if (!(body.title && body.url)) {
+        return res.status(400).end()
+    } 
+
+    let savedBlog = null
+
+    if (body.likes === undefined) {
+    
+        const newBlog = new Blog({
+            title: body.title,
+            author: body.author,
+            url: body.url,
+            likes: 0,
+            user: user.id
+        })
+        savedBlog = await newBlog.save()
 
     } else {
 
-        if (blog.likes === undefined) {
-        
-            const newBlog = new Blog({...blog, likes: 0})
-            const result = await newBlog.save()
-            response.status(201).json(result)
-    
-        } else {
-            const result = await blog.save()
-            response.status(201).json(result)
-        }
+        const newBlog = new Blog({
+            title: body.title,
+            author: body.author,
+            url: body.url,
+            likes: body.likes,
+            user: user.id
+        })
+        savedBlog = await newBlog.save()
     }
+    
+    user.blogs = user.blogs.concat(savedBlog.id)
+    await user.save()
+
+    res.json(savedBlog.toJSON())
 })
 
 blogRouter.delete('/:id', async (req, res, next) => {
@@ -51,6 +80,17 @@ blogRouter.put('/:id', async (req, res, next) => {
     res.json(updatedBlog.toJSON())
 
 })
+
+/** Help function */
+const getTokenFrom = req => {
+    const authorization = req.get('authorization')
+
+    if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+        return authorization.substring(7)
+    }
+
+    return null
+}
 
 
 module.exports = blogRouter
