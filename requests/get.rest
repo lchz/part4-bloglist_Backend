@@ -58,11 +58,11 @@ Content-Type: application/json
 #     "name": "Chris Savotor",
 #     "password": "chris"
 # }
-# {
-#     "username": "louis",
-#     "name": "Louis Manhatten",
-#     "password": "louis"
-# }
+{
+    "username": "test middleware",
+    "name": "Middleware TOken",
+    "password": "test"
+}
 
 #####################################
 ### Login
@@ -84,8 +84,8 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvdWlzIiwiaWQiOiI1ZTM5Yjk1YWQ0OGE2Nzc5MjgyNjRiOTYiLCJpYXQiOjE1ODA4OTU2MjR9.jrY5nsFhdR3AdTVYFeqwiJ1dRgcjoP6acI4yKJod8JI
 
 {
-    "title": "Getting familiar with token",
+    "title": "Middleware and token are amazing!",
     "author": "Kaeron McFeat",
     "url": "http://blog/kaeron/token",
-    "likes": 7
+    "likes": 20
 }

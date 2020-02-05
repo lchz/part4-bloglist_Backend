@@ -15,12 +15,10 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', async (req, res) => {
-    
     const body = req.body
-    const token = getTokenFrom(req)
-
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    if (!token || !decodedToken.id) {
+    const decodedToken = jwt.verify(req.token, process.env.SECRET)
+    
+    if (!req.token || !decodedToken.id) {
         return res.status(401).json({ error: 'token missing or invalid'})
     }
 
@@ -52,6 +50,7 @@ blogRouter.post('/', async (req, res) => {
             likes: body.likes,
             user: user.id
         })
+
         savedBlog = await newBlog.save()
     }
     
@@ -80,17 +79,6 @@ blogRouter.put('/:id', async (req, res, next) => {
     res.json(updatedBlog.toJSON())
 
 })
-
-/** Help function */
-const getTokenFrom = req => {
-    const authorization = req.get('authorization')
-
-    if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-        return authorization.substring(7)
-    }
-
-    return null
-}
 
 
 module.exports = blogRouter
